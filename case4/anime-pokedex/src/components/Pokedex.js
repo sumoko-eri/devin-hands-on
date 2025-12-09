@@ -66,56 +66,120 @@ export function createPokedex() {
   let isOpened = false;
   let isAnimating = false;
 
-  // Scroll handler to trigger opening animation
-  const handleScroll = (e) => {
+  // Open animation - smoother with easeInOutCubic and longer duration
+  const openPokedex = async () => {
     if (isOpened || isAnimating) return;
+    isAnimating = true;
+
+    // Hide hint with smooth fade
+    animate(hint, {
+      opacity: [1, 0],
+      duration: 400,
+      ease: 'easeOutCubic',
+    });
+
+    // Animate both pages simultaneously with smoother easing
+    const leftPageAnim = animate(leftPage, {
+      rotateY: [0, -180],
+      duration: 1200,
+      ease: 'easeInOutCubic',
+    });
+
+    animate(rightPage, {
+      rotateY: [0, 180],
+      duration: 1200,
+      ease: 'easeInOutCubic',
+    });
+
+    // Wait for page animation to complete using anime.js promise
+    await leftPageAnim.finished;
+
+    // Hide pages and show content
+    leftPage.classList.add('hidden');
+    rightPage.classList.add('hidden');
+    content.classList.remove('hidden');
+    
+    // Fade in content with smooth animation
+    const contentAnim = animate(content, {
+      opacity: [0, 1],
+      scale: [0.95, 1],
+      duration: 600,
+      ease: 'easeOutCubic',
+    });
+
+    await contentAnim.finished;
+    
+    isOpened = true;
+    isAnimating = false;
+  };
+
+  // Close animation - reverse of open with smooth easing
+  const closePokedex = async () => {
+    if (!isOpened || isAnimating) return;
+    isAnimating = true;
+
+    // Fade out content first
+    const contentAnim = animate(content, {
+      opacity: [1, 0],
+      scale: [1, 0.95],
+      duration: 500,
+      ease: 'easeInCubic',
+    });
+
+    await contentAnim.finished;
+
+    // Hide content and show pages
+    content.classList.add('hidden');
+    leftPage.classList.remove('hidden');
+    rightPage.classList.remove('hidden');
+    
+    // Reset page rotation to 0 (they were at -180/180)
+    leftPage.style.transform = 'rotateY(-180deg)';
+    rightPage.style.transform = 'rotateY(180deg)';
+
+    // Animate pages closing with smooth easing
+    const leftPageAnim = animate(leftPage, {
+      rotateY: [-180, 0],
+      duration: 1200,
+      ease: 'easeInOutCubic',
+    });
+
+    animate(rightPage, {
+      rotateY: [180, 0],
+      duration: 1200,
+      ease: 'easeInOutCubic',
+    });
+
+    await leftPageAnim.finished;
+
+    // Show hint again
+    animate(hint, {
+      opacity: [0, 1],
+      duration: 400,
+      ease: 'easeOutCubic',
+    });
+
+    isOpened = false;
+    isAnimating = false;
+  };
+
+  // Scroll handler to trigger opening/closing animation
+  const handleScroll = (e) => {
+    if (isAnimating) return;
     
     // Prevent page scroll during animation
     e.preventDefault();
-    isAnimating = true;
 
-    // Hide hint
-    animate(hint, {
-      opacity: [1, 0],
-      duration: 300,
-      ease: 'outQuad',
-    });
-
-    // Animate left page opening (rotate from right edge)
-    animate(leftPage, {
-      rotateY: [0, -180],
-      duration: 1000,
-      ease: 'inOutQuad',
-    });
-
-    // Animate right page opening (rotate from left edge)
-    animate(rightPage, {
-      rotateY: [0, 180],
-      duration: 1000,
-      ease: 'inOutQuad',
-    });
-
-    // After pages open, show content
-    setTimeout(() => {
-      leftPage.classList.add('hidden');
-      rightPage.classList.add('hidden');
-      content.classList.remove('hidden');
-      
-      // Fade in content
-      animate(content, {
-        opacity: [0, 1],
-        scale: [0.9, 1],
-        duration: 500,
-        ease: 'outQuad',
-      });
-
-      isOpened = true;
-      isAnimating = false;
-      
-      // Remove scroll listener after opening
-      window.removeEventListener('wheel', handleScroll, { passive: false });
-      window.removeEventListener('touchmove', handleScroll, { passive: false });
-    }, 1000);
+    // Get scroll direction
+    const deltaY = e.deltaY || (e.touches ? e.touches[0].clientY : 0);
+    
+    if (deltaY > 0 && !isOpened) {
+      // Scroll down - open the pokedex
+      openPokedex();
+    } else if (deltaY < 0 && isOpened) {
+      // Scroll up - close the pokedex
+      closePokedex();
+    }
   };
 
   // Add scroll listener when component is mounted

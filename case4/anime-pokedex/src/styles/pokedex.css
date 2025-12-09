@@ -39,6 +39,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .pokedex-page-left {
@@ -65,6 +67,8 @@
 /* Content after opening */
 .pokedex-content {
   opacity: 0;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .pokedex-logo {

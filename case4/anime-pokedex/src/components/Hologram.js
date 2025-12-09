@@ -117,34 +117,32 @@ export async function createHologram(pokemon, options = {}) {
 
   // Add close button handler
   const closeBtn = container.querySelector('.hologram-close');
-  closeBtn.addEventListener('click', () => {
-    // Fade out animation with lines
-    animate(container, {
+  closeBtn.addEventListener('click', async () => {
+    // Fade out animation with smoother easing
+    const closeAnim = animate(container, {
       opacity: [1, 0],
-      scale: [1, 0.9],
-      duration: 300,
-      ease: 'inQuad',
+      scale: [1, 0.95],
+      duration: 400,
+      ease: 'easeInCubic',
     });
-    setTimeout(() => {
-      if (onClose) onClose();
-      container.remove();
-    }, 300);
+    await closeAnim.finished;
+    if (onClose) onClose();
+    container.remove();
   });
 
   // Add next button handler
   const nextBtn = container.querySelector('.hologram-next');
-  nextBtn.addEventListener('click', () => {
-    // Fade out animation
-    animate(container, {
+  nextBtn.addEventListener('click', async () => {
+    // Fade out animation with smoother easing
+    const nextAnim = animate(container, {
       opacity: [1, 0],
-      scale: [1, 0.9],
-      duration: 300,
-      ease: 'inQuad',
+      scale: [1, 0.95],
+      duration: 400,
+      ease: 'easeInCubic',
     });
-    setTimeout(() => {
-      container.remove();
-      if (onNext) onNext();
-    }, 300);
+    await nextAnim.finished;
+    container.remove();
+    if (onNext) onNext();
   });
 
   // Fetch additional data
@@ -197,73 +195,74 @@ export async function createHologram(pokemon, options = {}) {
       line.style.strokeDashoffset = length;
     });
 
-    // Create timeline animation
+    // Create timeline animation with smoother defaults
     const timeline = createTimeline({
       defaults: {
-        ease: 'outQuad',
+        ease: 'easeOutCubic',
       }
     });
 
-    // Container fade in
+    // Container fade in - smoother and slightly longer
     timeline.add(container, {
       opacity: [0, 1],
-      duration: 300,
+      duration: 400,
+      ease: 'easeOutCubic',
     }, 0);
 
-    // Image appears with glow
+    // Image appears with glow - smoother easing
     timeline.add(image, {
       opacity: [0, 1],
-      scale: [0.8, 1],
-      duration: 400,
-      ease: 'outBack',
+      scale: [0.9, 1],
+      duration: 500,
+      ease: 'easeOutCubic',
     }, 200);
 
-    // Lines extend with "ビッ" effect - use container.querySelector for scoped selection
+    // Lines extend with "ビッ" effect - slightly longer for smoother feel
     const lineHeader = container.querySelector('.line-header');
     const lineStats = container.querySelector('.line-stats');
     const lineDesc = container.querySelector('.line-desc');
 
     timeline.add(lineHeader, {
       strokeDashoffset: [200, 0],
-      duration: 250,
-      ease: 'outExpo',
-    }, 500);
+      duration: 350,
+      ease: 'easeOutQuart',
+    }, 550);
 
     timeline.add(lineStats, {
       strokeDashoffset: [200, 0],
-      duration: 250,
-      ease: 'outExpo',
-    }, 550);
+      duration: 350,
+      ease: 'easeOutQuart',
+    }, 620);
 
     timeline.add(lineDesc, {
       strokeDashoffset: [300, 0],
-      duration: 300,
-      ease: 'outExpo',
-    }, 600);
+      duration: 400,
+      ease: 'easeOutQuart',
+    }, 690);
 
-    // Header panel fades in
+    // Header panel fades in - smoother with staggered timing
     timeline.add(container.querySelector('.hologram-header'), {
       opacity: [0, 1],
-      translateY: [10, 0],
-      duration: 300,
-      ease: 'outQuad',
-    }, 700);
+      translateY: [15, 0],
+      duration: 400,
+      ease: 'easeOutCubic',
+    }, 800);
 
     // Stats panel fades in
     timeline.add(container.querySelector('.hologram-stats'), {
       opacity: [0, 1],
-      translateY: [10, 0],
-      duration: 300,
-      ease: 'outQuad',
-    }, 750);
+      translateY: [15, 0],
+      duration: 400,
+      ease: 'easeOutCubic',
+    }, 880);
 
     // Description panel fades in
     timeline.add(container.querySelector('.hologram-description'), {
       opacity: [0, 1],
-      translateY: [10, 0],
-      duration: 300,
-      ease: 'outQuad',
-    }, 800);
+      translateY: [15, 0],
+      duration: 400,
+      ease: 'easeOutCubic',
+    }, 960);
   };
 
   // Start animations on next frame (after DOM insertion)
