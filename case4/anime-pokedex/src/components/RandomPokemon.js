@@ -90,25 +90,48 @@ export function displayPokemon(container, pokemon) {
 
   // Reset for animation
   container.style.opacity = '0';
-  container.style.transform = 'translateY(100px)';
+  container.style.transform = 'translateY(80px)';
   
-  // Animate appearance - slide up with glow effect
+  // Animate appearance - slide up with smoother easing
   animate(container, {
     opacity: [0, 1],
-    translateY: [100, 0],
-    duration: 800,
-    ease: 'outExpo',
+    translateY: [80, 0],
+    duration: 900,
+    ease: 'easeOutCubic',
   });
 
-  // Add glow animation to image
-  animate(imageWrapper, {
-    boxShadow: [
-      '0 0 0px rgba(255, 255, 255, 0)',
-      '0 0 30px rgba(255, 255, 255, 0.8)',
-      '0 0 60px rgba(100, 200, 255, 0.6)',
-      '0 0 30px rgba(255, 255, 255, 0.4)',
-    ],
-    duration: 1200,
-    ease: 'inOutQuad',
+  // Animate glow using the ::after pseudo-element via CSS class
+  // Instead of animating boxShadow (paint-heavy), we animate the overlay opacity
+  const glowOverlay = imageWrapper.querySelector('.glow-overlay') || createGlowOverlay(imageWrapper);
+  
+  animate(glowOverlay, {
+    opacity: [0, 0.8, 1, 0.6],
+    scale: [0.8, 1.1, 1.05, 1],
+    duration: 1400,
+    ease: 'easeInOutCubic',
   });
+}
+
+/**
+ * Creates a glow overlay element for smooth animation
+ * @param {HTMLElement} wrapper - The image wrapper element
+ * @returns {HTMLElement} The glow overlay element
+ */
+function createGlowOverlay(wrapper) {
+  const overlay = document.createElement('div');
+  overlay.className = 'glow-overlay';
+  overlay.style.cssText = `
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(100, 200, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 30%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity, transform;
+  `;
+  wrapper.appendChild(overlay);
+  return overlay;
 }

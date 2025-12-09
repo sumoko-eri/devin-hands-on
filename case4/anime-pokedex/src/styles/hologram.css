@@ -26,6 +26,8 @@
     0 0 40px rgba(0, 200, 255, 0.2),
     inset 0 0 30px rgba(0, 200, 255, 0.1);
   backdrop-filter: blur(10px);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .hologram-panel::before {
@@ -141,6 +143,8 @@
   border-radius: 50%;
   background: radial-gradient(circle, rgba(0, 200, 255, 0.2) 0%, transparent 70%);
   box-shadow: 0 0 30px rgba(0, 200, 255, 0.3);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .hologram-image img {
@@ -201,6 +205,8 @@
 .holo-panel {
   position: relative;
   z-index: 2;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .loading-text {
