@@ -93,7 +93,7 @@ export async function createHologram(pokemon, options = {}) {
       <div class="hologram-content">
         <div class="hologram-left">
           <div class="hologram-header holo-panel">
-            <span class="hologram-number">No.${String(pokemon.id).padStart(4, '0')}</span>
+            <span class="hologram-number">No.<span class="pokedex-id-number" data-target-id="${pokemon.id}">0000</span></span>
             <span class="hologram-name">${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</span>
           </div>
           <div class="hologram-image">
@@ -246,6 +246,29 @@ export async function createHologram(pokemon, options = {}) {
       translateY: [15, 0],
       duration: 400,
       ease: 'easeOutCubic',
+    }, 800);
+
+    // Pokedex ID counter animation - digital count-up effect
+    // Use separate animate() call with onUpdate for proper counter animation in anime.js v4
+    const idNumberElement = container.querySelector('.pokedex-id-number');
+    const targetId = parseInt(idNumberElement.getAttribute('data-target-id'), 10);
+    
+    // Start counter animation after header panel starts fading in (800ms delay)
+    setTimeout(() => {
+      const counterObj = { value: 0 };
+      animate(counterObj, {
+        value: targetId,
+        duration: 1000,
+        ease: 'easeOutExpo',
+        onUpdate: () => {
+          // Format with 3-digit zero-padding (or 4-digit if ID > 999)
+          const paddedValue = String(Math.round(counterObj.value)).padStart(
+            targetId > 999 ? 4 : 3, 
+            '0'
+          );
+          idNumberElement.textContent = paddedValue;
+        }
+      });
     }, 800);
 
     // Stats panel fades in
