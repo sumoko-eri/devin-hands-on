@@ -1,5 +1,5 @@
 /**
- * RandomPokemon component - Fetches and displays a random Pokemon from a selected type
+ * ランダムポケモンコンポーネント - 選択されたタイプからランダムなポケモンを取得・表示する
  */
 
 import { animate } from 'animejs';
@@ -8,9 +8,9 @@ const POKEAPI_TYPE_URL = 'https://pokeapi.co/api/v2/type/';
 const POKEAPI_POKEMON_URL = 'https://pokeapi.co/api/v2/pokemon/';
 
 /**
- * Fetches Pokemon list for a given type
- * @param {string} typeName - The type name
- * @returns {Promise<Array>} Array of Pokemon in this type
+ * 指定されたタイプのポケモン一覧を取得する
+ * @param {string} typeName - タイプ名
+ * @returns {Promise<Array>} このタイプのポケモン配列
  */
 async function fetchPokemonByType(typeName) {
   const response = await fetch(`${POKEAPI_TYPE_URL}${typeName}`);
@@ -22,9 +22,9 @@ async function fetchPokemonByType(typeName) {
 }
 
 /**
- * Fetches detailed Pokemon data
- * @param {string} pokemonUrl - The Pokemon API URL
- * @returns {Promise<Object>} Pokemon details
+ * ポケモンの詳細データを取得する
+ * @param {string} pokemonUrl - ポケモンAPIのURL
+ * @returns {Promise<Object>} ポケモン詳細データ
  */
 async function fetchPokemonDetails(pokemonUrl) {
   const response = await fetch(pokemonUrl);
@@ -35,9 +35,9 @@ async function fetchPokemonDetails(pokemonUrl) {
 }
 
 /**
- * Gets a random Pokemon from a type and returns its details
- * @param {string} typeName - The type name
- * @returns {Promise<Object>} Random Pokemon details
+ * タイプからランダムなポケモンを取得し、その詳細を返す
+ * @param {string} typeName - タイプ名
+ * @returns {Promise<Object>} ランダムなポケモンの詳細データ
  */
 export async function getRandomPokemon(typeName) {
   const pokemonList = await fetchPokemonByType(typeName);
@@ -53,8 +53,8 @@ export async function getRandomPokemon(typeName) {
 }
 
 /**
- * Creates the RandomPokemon display component
- * @returns {HTMLElement} The Pokemon display element
+ * ランダムポケモン表示コンポーネントを作成する
+ * @returns {HTMLElement} ポケモン表示要素
  */
 export function createRandomPokemonDisplay() {
   const container = document.createElement('div');
@@ -72,9 +72,9 @@ export function createRandomPokemonDisplay() {
 }
 
 /**
- * Displays a Pokemon with animation
- * @param {HTMLElement} container - The container element
- * @param {Object} pokemon - Pokemon data (id, name, image)
+ * ポケモンをアニメーション付きで表示する
+ * @param {HTMLElement} container - コンテナ要素
+ * @param {Object} pokemon - ポケモンデータ（id, name, image）
  */
 export function displayPokemon(container, pokemon) {
   const imageWrapper = container.querySelector('.pokemon-image-wrapper');
@@ -113,9 +113,9 @@ export function displayPokemon(container, pokemon) {
 }
 
 /**
- * Creates a glow overlay element for smooth animation
- * @param {HTMLElement} wrapper - The image wrapper element
- * @returns {HTMLElement} The glow overlay element
+ * 滑らかなアニメーション用のグローオーバーレイ要素を作成する
+ * @param {HTMLElement} wrapper - 画像ラッパー要素
+ * @returns {HTMLElement} グローオーバーレイ要素
  */
 function createGlowOverlay(wrapper) {
   const overlay = document.createElement('div');

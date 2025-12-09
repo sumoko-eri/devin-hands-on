@@ -1,12 +1,12 @@
 /**
- * TypeSelector component - Fetches and displays Pokemon types from PokéAPI
+ * タイプセレクターコンポーネント - PokéAPIからポケモンタイプを取得・表示する
  */
 
 const POKEAPI_TYPES_URL = 'https://pokeapi.co/api/v2/type/';
 
 /**
- * Fetches all Pokemon types from PokéAPI
- * @returns {Promise<Array>} Array of type objects
+ * PokéAPIから全てのポケモンタイプを取得する
+ * @returns {Promise<Array>} タイプオブジェクトの配列
  */
 async function fetchTypes() {
   const response = await fetch(POKEAPI_TYPES_URL);
@@ -19,9 +19,9 @@ async function fetchTypes() {
 }
 
 /**
- * Creates the TypeSelector component
- * @param {Function} onTypeSelect - Callback when a type is selected
- * @returns {HTMLElement} The type selector element
+ * タイプセレクターコンポーネントを作成する
+ * @param {Function} onTypeSelect - タイプ選択時のコールバック
+ * @returns {HTMLElement} タイプセレクター要素
  */
 export function createTypeSelector(onTypeSelect) {
   const container = document.createElement('div');

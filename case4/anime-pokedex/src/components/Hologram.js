@@ -1,5 +1,5 @@
 /**
- * Hologram component - Displays Pokemon info in a hologram-style panel
+ * ホログラムコンポーネント - ポケモン情報をホログラム風パネルで表示する
  */
 
 import { animate, createTimeline } from 'animejs';
@@ -8,9 +8,9 @@ const POKEAPI_POKEMON_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const POKEAPI_SPECIES_URL = 'https://pokeapi.co/api/v2/pokemon-species/';
 
 /**
- * Fetches detailed Pokemon data including weight and height
- * @param {number} id - Pokemon ID
- * @returns {Promise<Object>} Pokemon details
+ * ポケモンの詳細データ（体重・身長含む）を取得する
+ * @param {number} id - ポケモンID
+ * @returns {Promise<Object>} ポケモン詳細データ
  */
 async function fetchPokemonDetails(id) {
   const response = await fetch(`${POKEAPI_POKEMON_URL}${id}`);
@@ -21,9 +21,9 @@ async function fetchPokemonDetails(id) {
 }
 
 /**
- * Fetches Pokemon species data for flavor text
- * @param {number} id - Pokemon ID
- * @returns {Promise<Object>} Species data
+ * ポケモンの種族データ（フレーバーテキスト用）を取得する
+ * @param {number} id - ポケモンID
+ * @returns {Promise<Object>} 種族データ
  */
 async function fetchPokemonSpecies(id) {
   const response = await fetch(`${POKEAPI_SPECIES_URL}${id}`);
@@ -34,9 +34,9 @@ async function fetchPokemonSpecies(id) {
 }
 
 /**
- * Gets the latest flavor text in Japanese or English
- * @param {Array} flavorTextEntries - Array of flavor text entries
- * @returns {string} The flavor text
+ * 最新のフレーバーテキストを日本語または英語で取得する
+ * @param {Array} flavorTextEntries - フレーバーテキストエントリの配列
+ * @returns {string} フレーバーテキスト
  */
 function getLatestFlavorText(flavorTextEntries) {
   // Try to find Japanese flavor text first
@@ -55,21 +55,21 @@ function getLatestFlavorText(flavorTextEntries) {
 }
 
 /**
- * Formats Pokemon types as a string
- * @param {Array} types - Array of type objects
- * @returns {string} Formatted types
+ * ポケモンのタイプを文字列にフォーマットする
+ * @param {Array} types - タイプオブジェクトの配列
+ * @returns {string} フォーマットされたタイプ文字列
  */
 function formatTypes(types) {
   return types.map(t => t.type.name).join(' / ');
 }
 
 /**
- * Creates the Hologram panel component
- * @param {Object} pokemon - Basic Pokemon data (id, name, image)
- * @param {Object} options - Options object
- * @param {Function} options.onClose - Callback when close button is clicked
- * @param {Function} options.onNext - Callback when next button is clicked
- * @returns {HTMLElement} The hologram element
+ * ホログラムパネルコンポーネントを作成する
+ * @param {Object} pokemon - ポケモンの基本データ（id, name, image）
+ * @param {Object} options - オプションオブジェクト
+ * @param {Function} options.onClose - 閉じるボタンクリック時のコールバック
+ * @param {Function} options.onNext - 次へボタンクリック時のコールバック
+ * @returns {HTMLElement} ホログラム要素
  */
 export async function createHologram(pokemon, options = {}) {
   const { onClose, onNext } = options;
