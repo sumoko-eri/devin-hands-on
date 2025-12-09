@@ -1,0 +1,72 @@
+/* Type Selector styles */
+
+.type-selector-container {
+  padding: 10px;
+}
+
+.type-selector-title {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.loading-text,
+.error-text {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+}
+
+.error-text {
+  color: #ff5555;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.type-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.type-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.type-btn.selected {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Type-specific colors */
+.type-normal { background: linear-gradient(135deg, #a8a878, #8a8a5c); }
+.type-fire { background: linear-gradient(135deg, #f08030, #c45c1a); }
+.type-water { background: linear-gradient(135deg, #6890f0, #4a6fc4); }
+.type-electric { background: linear-gradient(135deg, #f8d030, #c4a620); }
+.type-grass { background: linear-gradient(135deg, #78c850, #5a9a38); }
+.type-ice { background: linear-gradient(135deg, #98d8d8, #6cb8b8); }
+.type-fighting { background: linear-gradient(135deg, #c03028, #8a201a); }
+.type-poison { background: linear-gradient(135deg, #a040a0, #703070); }
+.type-ground { background: linear-gradient(135deg, #e0c068, #b89838); }
+.type-flying { background: linear-gradient(135deg, #a890f0, #7860c0); }
+.type-psychic { background: linear-gradient(135deg, #f85888, #c43060); }
+.type-bug { background: linear-gradient(135deg, #a8b820, #788810); }
+.type-rock { background: linear-gradient(135deg, #b8a038, #8a7828); }
+.type-ghost { background: linear-gradient(135deg, #705898, #4a3870); }
+.type-dragon { background: linear-gradient(135deg, #7038f8, #4810c8); }
+.type-dark { background: linear-gradient(135deg, #705848, #483830); }
+.type-steel { background: linear-gradient(135deg, #b8b8d0, #8888a0); }
+.type-fairy { background: linear-gradient(135deg, #ee99ac, #c06080); }
