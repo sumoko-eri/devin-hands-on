@@ -1,5 +1,5 @@
 /**
- * Pokedex component - Creates a retro Pokedex UI frame with scroll-triggered opening animation
+ * ポケモン図鑑コンポーネント - スクロールで開閉するレトロなポケモン図鑑UIフレームを作成する
  */
 
 import { animate } from 'animejs';
