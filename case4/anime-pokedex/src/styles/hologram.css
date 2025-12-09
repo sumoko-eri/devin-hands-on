@@ -1,0 +1,233 @@
+/* Hologram panel styles */
+
+.hologram-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.hologram-panel {
+  position: relative;
+  width: 90%;
+  max-width: 700px;
+  background: linear-gradient(135deg, rgba(0, 200, 255, 0.1) 0%, rgba(0, 100, 200, 0.15) 100%);
+  border: 2px solid rgba(0, 200, 255, 0.5);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    0 0 20px rgba(0, 200, 255, 0.3),
+    0 0 40px rgba(0, 200, 255, 0.2),
+    inset 0 0 30px rgba(0, 200, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.hologram-panel::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 22px;
+  background: linear-gradient(45deg, rgba(0, 200, 255, 0.5), transparent, rgba(0, 200, 255, 0.5));
+  z-index: -1;
+  animation: hologram-glow 3s ease-in-out infinite;
+}
+
+@keyframes hologram-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.hologram-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 100, 100, 0.3);
+  border: 2px solid rgba(255, 100, 100, 0.5);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hologram-close:hover {
+  background: rgba(255, 100, 100, 0.5);
+  box-shadow: 0 0 15px rgba(255, 100, 100, 0.5);
+}
+
+/* Next button */
+.hologram-next {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 40px;
+  background: rgba(0, 200, 255, 0.2);
+  border: 2px solid rgba(0, 200, 255, 0.6);
+  border-radius: 25px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.hologram-next:hover {
+  background: rgba(0, 200, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.6);
+  transform: translateX(-50%) scale(1.05);
+}
+
+.hologram-content {
+  display: flex;
+  gap: 30px;
+}
+
+.hologram-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hologram-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hologram-header {
+  margin-bottom: 15px;
+}
+
+.hologram-number {
+  display: block;
+  font-size: 14px;
+  color: rgba(0, 200, 255, 0.8);
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+.hologram-name {
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.5);
+}
+
+.hologram-image {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.2) 0%, transparent 70%);
+  box-shadow: 0 0 30px rgba(0, 200, 255, 0.3);
+}
+
+.hologram-image img {
+  max-width: 100%;
+  max-height: 100%;
+  filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.5));
+}
+
+.hologram-stats {
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.hologram-stats p {
+  margin: 5px 0;
+}
+
+.stat-label {
+  color: rgba(0, 200, 255, 0.8);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.hologram-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 20px;
+  background: rgba(0, 200, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 200, 255, 0.2);
+}
+
+.hologram-description p {
+  margin: 0;
+}
+
+/* SVG connection lines */
+.hologram-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.holo-line {
+  stroke: rgba(0, 200, 255, 0.8);
+  stroke-width: 2;
+  fill: none;
+  filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.8));
+}
+
+/* Animation panel base styles */
+.holo-panel {
+  position: relative;
+  z-index: 2;
+}
+
+.loading-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.error-text {
+  color: rgba(255, 100, 100, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hologram-content {
+    flex-direction: column;
+  }
+  
+  .hologram-panel {
+    padding: 20px;
+  }
+  
+  .hologram-name {
+    font-size: 22px;
+  }
+  
+  .hologram-image {
+    width: 140px;
+    height: 140px;
+  }
+}
