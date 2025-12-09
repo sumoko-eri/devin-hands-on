@@ -2,8 +2,58 @@
 
 const axios = require('axios');
 const { program } = require('commander');
+const chalk = require('chalk');
 
 const WTTR_BASE_URL = 'https://wttr.in';
+
+/**
+ * Colorizes JSON output for better readability
+ * @param {object} obj - The object to colorize
+ * @param {number} indent - Current indentation level
+ * @returns {string} Colorized JSON string
+ */
+function colorizeJson(obj, indent = 0) {
+  const spaces = '  '.repeat(indent);
+  
+  if (obj === null) {
+    return chalk.gray('null');
+  }
+  
+  if (typeof obj === 'boolean') {
+    return chalk.yellow(obj.toString());
+  }
+  
+  if (typeof obj === 'number') {
+    return chalk.cyan(obj.toString());
+  }
+  
+  if (typeof obj === 'string') {
+    return chalk.green(`"${obj}"`);
+  }
+  
+  if (Array.isArray(obj)) {
+    if (obj.length === 0) {
+      return '[]';
+    }
+    const items = obj.map(item => `${spaces}  ${colorizeJson(item, indent + 1)}`);
+    return `[\n${items.join(',\n')}\n${spaces}]`;
+  }
+  
+  if (typeof obj === 'object') {
+    const keys = Object.keys(obj);
+    if (keys.length === 0) {
+      return '{}';
+    }
+    const items = keys.map(key => {
+      const coloredKey = chalk.magenta(`"${key}"`);
+      const coloredValue = colorizeJson(obj[key], indent + 1);
+      return `${spaces}  ${coloredKey}: ${coloredValue}`;
+    });
+    return `{\n${items.join(',\n')}\n${spaces}}`;
+  }
+  
+  return String(obj);
+}
 
 /**
  * Fetches weather data for a given city from wttr.in API
@@ -55,7 +105,7 @@ async function main() {
     .action(async (city) => {
       try {
         const weatherData = await fetchWeather(city);
-        console.log(JSON.stringify(weatherData, null, 2));
+        console.log(colorizeJson(weatherData));
       } catch (error) {
         console.error(`Error: ${error.message}`);
         process.exit(1);
